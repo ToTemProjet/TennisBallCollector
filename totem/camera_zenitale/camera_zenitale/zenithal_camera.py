@@ -21,6 +21,11 @@ class zenithalCameraNode(Node):
 		cv2.imshow("test", self.img)
 		cv2.waitKey(1)
 
+	def serachBalls(self):
+		"""Returns array of [X, Y, T] for each ball detected,T is the time since ball has spawned"""
+		pass
+
+
 def main():
 	rclpy.init()
 	zen_cam_node = zenithalCameraNode()
