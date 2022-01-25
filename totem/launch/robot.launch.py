@@ -8,12 +8,6 @@ from launch.substitutions import LaunchConfiguration
 from ament_index_python import get_package_share_directory
 from launch_ros.actions import Node
 
-
-# ROS_DISTRO_ELOQUENT = "eloquent"
-# ROS_DISTRO_FOXY = "foxy"
-# ROS_DISTRO_GALACTIC = "galactic"
-# ROS_DISTRO = os.environ.get("ROS_DISTRO")
-
 def generate_launch_description():
     tennis_court_share = get_package_share_directory("tennis_court")
     gazebo_ros_share = get_package_share_directory("gazebo_ros")
@@ -22,6 +16,7 @@ def generate_launch_description():
     # desc_pkg = FindPackageShare(desc_package).find(desc_package)
     # model_file = os.path.join(desc_pkg, "urdf", "robot.urdf.xacro")
 
+    # A ne pas utiliser ici
     # os.system("ros2 service call /delete_entity 'gazebo_msgs/DeleteEntity'  '{name: totem}'")
 
     # Tennis court
@@ -47,7 +42,7 @@ def generate_launch_description():
 
     # gazebo_spawn_entity_node = Node(
     #     package="gazebo_ros", executable="spawn_entity.py",
-    #     arguments=["-entity", "super_robot_4000", "-topic", "/robot_description",
+    #     arguments=["-entity", "totem", "-topic", "/robot_description",
     #                 "-x", "0", "-y", "0", "-z", "0.95"],
     #     )
 
