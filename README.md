@@ -14,10 +14,24 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ###### A compléter avec la/les commande(s) à lancer.
 
-Pour lancer la scène seule :
+Se placer dans le dossier "TennisBallCollector"
+```bash
+cd <you_directory>/TennisBallCollector/
+```
+
+Construire l'ensemble du projet :
+```bash
+colcon build --symlink-install
+```
+
+Charger les variables nécessaires au fonctionnement de ROS2 :
 
 ```bash
 source setup.sh
+```
+
+Lancer le robot ET la scène :
+```bash
 ros2 launch totem robot.launch.py
 ```
 
