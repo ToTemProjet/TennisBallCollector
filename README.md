@@ -22,12 +22,16 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Membres
 
-###### A compléter avec les membres du groupe.
-
+Badr MOUTALIB
+Baptiste ORLHAC
+Enzo ESSONO
+Florian GAURIER
+Isaac-Andreï WITT
+Martin GOUNABOU
 
 ### Gestion de projet
 
-###### A compléter avec le lien vers votre [Taiga](https://taiga.io).
+https://tree.taiga.io/project/andrei54-totem/timeline
 
 
 
