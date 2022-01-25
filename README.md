@@ -13,8 +13,12 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 ### Démarrer la simulation
 
 ###### A compléter avec la/les commande(s) à lancer.
+
+Pour lancer la scène seule :
+
 ```bash
-# TODO
+source setup.sh
+ros2 launch totem robot.launch.py
 ```
 
 
