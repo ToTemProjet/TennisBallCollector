@@ -3,6 +3,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 import cv2
 import numpy as np
+<<<<<<< HEAD
 import signal
 import sys
 from matplotlib import pyplot as plt
@@ -71,6 +72,7 @@ def plot3dlabeled(img, name, labels, fig=None):
 
 	return fig
 
+
 class zenithalCameraNode(Node):
 	def __init__(self):
 		super().__init__("zenithal_camera")
@@ -118,6 +120,11 @@ class zenithalCameraNode(Node):
 
 	def shutdown(self, sig, frame):
 		sys.exit(0)
+	def img_callback(self, msg):
+		self.img = np.array(msg.data, dtype=np.uint8).reshape((msg.height, msg.width, 3))
+		self.img = cv2.cvtColor(self.img, cv2.COLOR_RGB2BGR)
+		cv2.imshow("test", self.img)
+		cv2.waitKey(1)
 
 def main():
 	rclpy.init()
