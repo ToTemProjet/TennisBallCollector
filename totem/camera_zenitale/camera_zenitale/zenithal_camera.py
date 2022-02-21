@@ -86,6 +86,8 @@ class zenithalCameraNode(Node):
 
 		self.create_timer(0.1, self.search_balls_and_robot)
 
+		self.thresh = [80, 150]
+
 	def img_callback(self, msg):
 		self.img = np.array(msg.data, dtype=np.uint8).reshape((msg.height, msg.width, 3))
 		self.img = cv2.cvtColor(self.img, cv2.COLOR_RGB2BGR)
@@ -100,13 +102,15 @@ class zenithalCameraNode(Node):
 			# cielab = cv2.cvtColor(self.img, cv2.COLOR_BGR2Lab)
 			hsv = cv2.cvtColor(self.img, cv2.COLOR_BGR2HSV)
 
+			# self.fig = plot3dchans(hsv, "hsv", self.fig)
+			thresholded = cv2.threshold(hsv[:,:,0], self.thresh[0], self.thresh[1], cv2.THRESH_BINARY)
+
+			# cv2.imshow("thresholded", thresholded)
 			cv2.imshow("hsv", hsv)
 			cv2.imshow("h", hsv[:, :, 0])
 			cv2.imshow("s", hsv[:, :, 1]) #
 			cv2.imshow("v2", hsv[:, :, 2])
 			cv2.waitKey(1)
-
-			# self.fig = plot3dchans(hsv, "hsv", self.fig)
 		except:
 			pass
 
