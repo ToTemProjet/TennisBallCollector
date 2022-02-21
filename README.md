@@ -22,12 +22,16 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Membres
 
-###### A compléter avec les membres du groupe.
-
+Badr MOUTALIB
+Baptiste ORLHAC
+Enzo ESSONO
+Florian GAURIER
+Isaac-Andreï WITT
+Martin GOUNABOU
 
 ### Gestion de projet
 
-###### A compléter avec le lien vers votre [Taiga](https://taiga.io).
+https://tree.taiga.io/project/andrei54-totem/timeline
 
 
 
@@ -53,3 +57,4 @@ Le dossier `docs` contient tous les documents utiles au projet:
 ### Rapports
 
 Le dossier `reports` doit être rempli avec les rapports d'[objectifs](../reports/GoalsTemplate.md) et de [rétrospectives](../reports/DebriefTemplate.md) en suivant les deux templates mis à disposition. Ces deux rapports doivent être rédigés respectivement au début et à la fin de chaque sprint.
+
