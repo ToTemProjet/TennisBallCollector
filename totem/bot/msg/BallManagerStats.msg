@@ -1,3 +1,0 @@
-int64 score
-int32 current_ball_count
-int32 total_ball_count
