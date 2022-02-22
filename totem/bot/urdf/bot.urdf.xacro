@@ -31,7 +31,7 @@
   	</link>
 	<link name="back_left_wheel">
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -42,7 +42,7 @@
   	</link>
 	<link name="back_right_wheel">
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -53,7 +53,7 @@
   	</link>
 	<link name="front_left_wheel">
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -64,7 +64,7 @@
   	</link>
 	<link name="front_right_wheel">
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -112,28 +112,28 @@
         <parent link="base_link"/>
         <child link="front_right_wheel"/>
 		<limit effort="30" velocity="2.0"/>
-      	<axis xyz="1 0 0" />
+      	<axis xyz="0 0 1" />
       	<dynamics damping="1.0" />
  	</joint>
 	<joint name="front_left_joint" type="continuous">
 		<origin xyz="1.24 1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="front_left_wheel"/>
-		<axis xyz="1 0 0"/>
+		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="2.0"/>
  	</joint>
 	<joint name="back_right_joint" type="continuous">
 		<origin xyz="-1.24 -1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="back_right_wheel"/>
-		<axis xyz="1 0 0"/>
+		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="2.0"/>
  	</joint>
 	<joint name="back_left_joint" type="continuous">
 		<origin xyz="1.24 -1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="back_left_wheel"/>
-		<axis xyz="1 0 0"/>
+		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="2.0"/>
  	</joint>
 	<joint name="front_panel_joint" type="prismatic">
