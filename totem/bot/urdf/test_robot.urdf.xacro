@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="super_robot_4000">
+
+<xacro:property name="wheel_r" value="0.20" />
+<xacro:property name="wheel_l" value="0.1" />
+<xacro:property name="lidar_r" value="0.15" />
+<xacro:property name="lidar_l" value="0.1" />
+<xacro:property name="foolish_wheel_r" value="0.09" />
+<xacro:property name="body_l" value="0.35" />
+<xacro:property name="body_L" value="0.75" />
+<xacro:property name="body_h" value="0.4" />
+
+<xacro:property name="body_mass" value="10" />
+<xacro:property name="wheel_mass" value="3" />
+<xacro:property name="foolish_wheel_mass" value="1" />
+<xacro:property name="lidar_mass" value="0.5" />
+
+<xacro:macro name="box_inertia" params="m w h d">
+  <inertial>
+    <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+    <mass value="${m}"/>
+    <inertia ixx="${(m/12) * (h*h + d*d)}" ixy="0.0" ixz="0.0" iyy="${(m/12) * (w*w + d*d)}" iyz="0.0" izz="${(m/12) * (w*w + h*h)}"/>
+  </inertial>
+</xacro:macro>
+
+<xacro:macro name="cylinder_inertia" params="m r h">
+  <inertial>
+    <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+    <mass value="${m}"/>
+    <inertia ixx="${(m/12) * (3*r*r + h*h)}" ixy = "0" ixz = "0" iyy="${(m/12) * (3*r*r + h*h)}" iyz = "0" izz="${(m/2) * (r*r)}"/>
+  </inertial>
+</xacro:macro>
+
+<xacro:macro name="sphere_inertia" params="m r">
+  <inertial>
+    <mass value="${m}"/>
+    <inertia ixx="${(2/5) * m * (r*r)}" ixy="0.0" ixz="0.0" iyy="${(2/5) * m * (r*r)}" iyz="0.0" izz="${(2/5) * m * (r*r)}"/>
+  </inertial>
+</xacro:macro>
+
+<xacro:macro name="create_link" params="name mass *shape *inertia">
+  <link name="${name}">
+
+    <visual>
+      <geometry>
+        <xacro:insert_block name="shape" />
+      </geometry>
+    </visual>
+
+    <collision>
+      <geometry>
+        <xacro:insert_block name="shape" />
+      </geometry>
+    </collision>
+
+    <xacro:insert_block name="inertia" />
+
+  </link>
+</xacro:macro>
+
+<xacro:macro name="create_wheel" params="name mass *shape *inertia">
+  <xacro:create_link name="${name}" mass="${mass}">
+    <xacro:insert_block name="shape" />
+    <xacro:insert_block name="inertia" />
+  </xacro:create_link>
+
+  <gazebo reference="${name}">
+    <mu1>1.2</mu1>
+    <mu2>1.2</mu2>
+    <material>Gazebo/FlatBlack</material>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+  </gazebo>
+</xacro:macro>
+
+<xacro:create_link name="body" mass="${body_mass}">
+  <box size="${body_L} ${body_l} ${body_h} "/>
+  <xacro:box_inertia m="${body_mass}" w="${body_l}" d="${body_L}" h="${body_h}" />
+</xacro:create_link>
+
+<xacro:create_wheel name="left_wheel" mass="${wheel_mass}">
+  <cylinder length="${wheel_l}" radius="${wheel_r}"/>
+  <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_r}" h="${wheel_l}" />
+</xacro:create_wheel>
+
+<xacro:create_wheel name="right_wheel" mass="${wheel_mass}">
+  <cylinder length="${wheel_l}" radius="${wheel_r}"/>
+  <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_r}" h="${wheel_l}" />
+</xacro:create_wheel>
+
+<xacro:create_link name="foolish_wheel" mass="${foolish_wheel_mass}">
+  <sphere radius="${foolish_wheel_r}"/>
+  <xacro:sphere_inertia m="${foolish_wheel_mass}" r="${foolish_wheel_r}" />
+</xacro:create_link>
+
+<gazebo reference="foolish_wheel">
+  <mu1>0.01</mu1>
+  <mu2>0.01</mu2>
+  <material>Gazebo/SkyBlue</material>
+  <kp>500000.0</kp>
+  <kd>1.0</kd>
+  <minDepth>0.001</minDepth>
+  <maxVel>0.1</maxVel>
+</gazebo>
+
+<link name="lidar">
+  <visual>
+    <geometry>
+      <cylinder length="${lidar_l}" radius="${lidar_r}"/>
+    </geometry>
+  </visual>
+
+  <xacro:cylinder_inertia m="${lidar_mass}" r="${lidar_r}" h="${lidar_l}" />
+</link>
+
+<gazebo reference="lidar">
+  <sensor name="sensor_ray" type="ray">
+
+    <visualize>true</visualize>
+
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>360</samples>
+          <resolution>1.0</resolution>
+          <min_angle>0.</min_angle>
+          <max_angle>6.2830</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>1</samples>
+          <resolution>1.0</resolution>
+          <min_angle>0.</min_angle>
+          <max_angle>0.</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.05</min>
+        <max>50.0</max>
+      </range>
+    </ray>
+
+    <always_on>false</always_on>
+
+    <update_rate>10.0</update_rate>
+    
+    
+    <plugin name="laserscan" filename="libgazebo_ros_ray_sensor.so">
+      <ros>
+        <namespace>/ray</namespace>
+        <remapping>~/out:=laserscan</remapping>
+      </ros>
+      <output_type>sensor_msgs/LaserScan</output_type>
+    </plugin>
+    
+  </sensor>
+</gazebo>
+
+<link name="camera">
+  <visual>
+    <geometry>
+      <box size="0.1 0.1 0.1 "/>
+    </geometry>
+  </visual>
+</link>
+
+<gazebo reference="camera">
+  <sensor type="camera" name="camera">
+    <update_rate>30.0</update_rate>
+    <always_on>true</always_on>
+    <visualize>true</visualize>
+    <camera name="head">
+      <horizontal_fov>1.3962634</horizontal_fov>
+      <image>
+        <width>720</width>
+        <height>480</height>
+        <format>R8G8B8</format>
+      </image>
+    </camera>
+    <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+      <alwaysOn>false</alwaysOn>
+      <updateRate>1.0</updateRate>
+      <cameraName>camera</cameraName>
+      <imageTopicName>image_raw</imageTopicName>
+      <frameName>camera</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
+
+
+<joint name="body2left_wheel" type="continuous">
+  <parent link="body"/>
+  <child link="left_wheel"/>
+  <axis xyz="0 0 -1" />
+  <origin xyz="-${body_L/4} ${body_l/2+wheel_l/2} -${foolish_wheel_r+body_h/2-wheel_r}" rpy="${pi/2} 0 0"/>
+</joint>
+
+<joint name="body2right_wheel" type="continuous">
+  <parent link="body"/>
+  <child link="right_wheel"/>
+  <axis xyz="0 0 -1" />
+  <origin xyz="-${body_L/4} -${body_l/2+wheel_l/2} -${foolish_wheel_r+body_h/2-wheel_r}" rpy="${pi/2} 0 0"/>
+</joint>
+
+<joint name="body2foolish_wheel" type="continuous">
+  <parent link="body"/>
+  <child link="foolish_wheel"/>
+  <origin xyz="${body_L/4} 0 -${body_h/2}" rpy="0 0 0"/>
+</joint>
+
+<joint name="body2lidar" type="fixed">
+  <parent link="body"/>
+  <child link="lidar"/>
+  <origin xyz="-${3*body_L/10} 0 ${body_h/2+lidar_l/2+0.01}" rpy="0 0 0"/>
+</joint>
+
+<joint name="body2camera" type="fixed">
+  <parent link="body"/>
+  <child link="camera"/>
+  <origin xyz="${body_L/2+0.05} 0 ${body_h*3/20}" rpy="0 0 0"/>
+</joint>
+
+<gazebo>
+  <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+
+    <update_rate>10</update_rate>
+
+    <!-- wheels -->
+    <left_joint>body2left_wheel</left_joint>
+    <right_joint>body2right_wheel</right_joint>
+
+    <!-- kinematics -->
+    <wheel_separation>${body_l+wheel_l}</wheel_separation>
+    <wheel_diameter>${2*wheel_r}</wheel_diameter>
+
+    <!-- limits -->
+    <max_wheel_torque>20</max_wheel_torque>
+    <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+    <!-- output -->
+    <publish_odom>true</publish_odom>
+    <publish_odom_tf>true</publish_odom_tf>
+    <publish_wheel_tf>true</publish_wheel_tf>
+
+    <robot_base_frame>body</robot_base_frame>
+
+  </plugin>
+</gazebo>
+
+
+</robot>

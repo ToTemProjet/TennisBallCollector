@@ -15,8 +15,7 @@ def generate_launch_description():
     gazebo_ros_share = get_package_share_directory("gazebo_ros")
     cam_zen_share = get_package_share_directory("camera_zenitale")
     desc_package = get_package_share_directory("bot")
-    # desc_pkg = FindPackageShare(desc_package).find(desc_package)
-    model_file = os.path.join(desc_package, "urdf", "bot.urdf")
+    model_file = os.path.join(desc_package, "urdf", "bot.urdf.xacro")
 
     # A ne pas utiliser ici
     # os.system("ros2 service call /delete_entity 'gazebo_msgs/DeleteEntity'  '{name: totem}'")
@@ -39,7 +38,7 @@ def generate_launch_description():
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher", executable="robot_state_publisher",
-        parameters=[{"robot_description": model_file}]
+        parameters=[{"robot_description": Command(["xacro", " ", model_file])}]
         )
 
     gazebo_spawn_entity_node = Node(
