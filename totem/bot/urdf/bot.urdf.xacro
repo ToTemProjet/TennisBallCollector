@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <robot name="bot">
  	<link name="base_link">
+	    <inertial>
+			<!-- <origin xyz="0 0 0.5" rpy="0 0 0"/> -->
+			<mass value="1"/>
+			<inertia ixx="2.3" ixy="0" ixz="0" iyy="3.35" iyz="0.00" izz="1.22" />
+		</inertial>
 		<visual>
 		    <origin xyz="1.05 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -28,10 +33,33 @@
 	       		<color rgba="0 0.9 0.9 1.0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 -1.95 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="2 0.1 1"/>
+			</geometry>
+		</collision>
+		<collision>
+		    <origin xyz="1.05 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.1 4 1"/>
+			</geometry>
+		</collision>
+		<collision>
+		    <origin xyz="-1.05 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.1 4 1"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="back_left_wheel">
+		<inertial>
+			<mass value="100"/>
+			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
+		</inertial>
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -39,10 +67,21 @@
 	       		<color rgba="0 0 0 0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<cylinder radius="0.5" length="0.2"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="back_right_wheel">
+		<inertial>
+			<mass value="100"/>
+			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
+		</inertial>
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -50,10 +89,21 @@
 	       		<color rgba="0 0 0 0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<cylinder radius="0.5" length="0.2"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="front_left_wheel">
+		<inertial>
+			<mass value="100"/>
+			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
+		</inertial>
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -61,10 +111,21 @@
 	       		<color rgba="0 0 0 0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<cylinder radius="0.5" length="0.2"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="front_right_wheel">
+		<inertial>
+			<mass value="100"/>
+			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
+		</inertial>
   		<visual>
-		    
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
@@ -72,8 +133,20 @@
 	       		<color rgba="0 0 0 0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<cylinder radius="0.5" length="0.2"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="front_panel">
+		<inertial>
+			<origin xyz="0 1.95 0" rpy="0 0 0"/>
+			<mass value="100"/>
+			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
+		</inertial>
   		<visual>
 		    <origin xyz="0 1.95 0" rpy="0 0 0"/>
 			<geometry>
@@ -83,7 +156,14 @@
 	       		<color rgba="0 0 0.9 1.0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 1.95 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="2 0.1 1"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="mid_panel">
   		<visual>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -94,7 +174,14 @@
 	       		<color rgba="1 0 0 1.0"/>
 	     	</material>
 		</visual>
+		<collision>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="1.9 0.02 1"/>
+			</geometry>
+		</collision>
   	</link>
+
 	<link name="mid_panel_prism">
   		<visual>
 		    <origin xyz="-0.975 0 0" rpy="0 0 0"/>
@@ -107,33 +194,36 @@
 		</visual>
   	</link>
 
+
+
+
 	<joint name="front_right_joint" type="continuous">
 		<origin xyz="-1.24 1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="front_right_wheel"/>
 		<limit effort="30" velocity="2.0"/>
-      	<axis xyz="1 0 0" />
+      	<axis xyz="0 0 1" />
       	<dynamics damping="1.0" />
  	</joint>
 	<joint name="front_left_joint" type="continuous">
 		<origin xyz="1.24 1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="front_left_wheel"/>
-		<axis xyz="1 0 0"/>
+		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="2.0"/>
  	</joint>
 	<joint name="back_right_joint" type="continuous">
 		<origin xyz="-1.24 -1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="back_right_wheel"/>
-		<axis xyz="1 0 0"/>
+		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="2.0"/>
  	</joint>
 	<joint name="back_left_joint" type="continuous">
 		<origin xyz="1.24 -1.45 -0.07" rpy="0 1.57 0"/>
         <parent link="base_link"/>
         <child link="back_left_wheel"/>
-		<axis xyz="1 0 0"/>
+		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="2.0"/>
  	</joint>
 	<joint name="front_panel_joint" type="prismatic">
@@ -154,4 +244,53 @@
 		<axis xyz="1 0 0"/>
 		<limit effort="1.0" velocity="0.5" lower="0" upper="1.57" />
  	</joint>
+
+
+
+
+<!-- *********************** CONTROLEUR ******************************  -->
+
+  	<gazebo>
+    <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+
+
+      <!-- wheels -->
+      <left_joint>front_left_joint</left_joint>
+      <right_joint>front_right_joint</right_joint>
+      <!-- kinematics -->
+      <wheel_separation>1.25</wheel_separation>
+      <wheel_diameter>0.6</wheel_diameter>
+      <!-- limits -->
+      <max_wheel_torque>20</max_wheel_torque>
+      <max_wheel_acceleration>1.0</max_wheel_acceleration>
+      <!-- output -->
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+  </gazebo>
+
+
+    <!-- <gazebo>
+    <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+
+
+
+      <left_joint>back_left_joint</left_joint>
+      <right_joint>back_right_joint</right_joint>
+
+      <wheel_separation>1.25</wheel_separation>
+      <wheel_diameter>0.6</wheel_diameter>
+
+      <max_wheel_torque>20</max_wheel_torque>
+      <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+  </gazebo> -->
+
 </robot>
