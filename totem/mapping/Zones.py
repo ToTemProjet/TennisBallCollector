@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 class Zone:
-    def __init__(self, box_pix, type, name="1connu", partie=None):
+    def __init__(self, box_pix, type, name="1connu", partie="None"):
         avalaible_types=["ball","robot","wall","goal"]
         self.message=""
         self.__name=name
@@ -30,15 +30,21 @@ class Zone:
         else : self.message+= "La zone {} est restée dans la position {}! {} n'est pas un choix possible".format(self.__name,self._blocked,position)+"\n"
         print(self.log())
 
-    def assigne_partie(self,pa):
+    def assigne_partie(self):
         try:
-            self._partie=pa
+            if self._box_pix[:,1]>=735:
+                self._partie="B"
+            else:
+                self._partie="A"
             self.message += "La zone {} est passée dans la partie {}!".format(self.__name, self._partie) + "\n"
 
-        except AssertionError:
-            self.message += "La zone {} est restée dans la partie {}! {} n'est pas une partie valide".format(self.__name, self._partie, pa) + "\n"
+        except :
+            self.message += "Error! La zone {} est restée dans la partie {}!".format(self.__name, self._partie) + "\n"
 
         print(self.log())
+
+    def __str__(self,map=None):
+        pass
 
 
     def log(self):
@@ -50,6 +56,10 @@ class Wall(Zone):
     def __init__(self,box_pix,name="Wall1connu"):
         super().__init__(box_pix=box_pix,type="wall",name=name)
         self.switch_access(True)
+
+    def __str__(self,map):
+        try:
+            img=
 
 class Goal(Zone):
     def __init__(self,box_pix,name="Goal1connu"):

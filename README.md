@@ -2,7 +2,6 @@
 
 Ceci est un template de dépôt Git pour le cours d'ingénierie système et modélisation robotique à l'ENSTA Bretagne en 2021.
 
-
 ## Lancer la simulation
 
 ### Dépendences
@@ -10,13 +9,19 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 ###### A compléter avec la/les dépendences.
 
 
+
 ### Démarrer la simulation
 
 ###### A compléter avec la/les commande(s) à lancer.
 
+Cloner le repository :
+```bash
+git clone https://github.com/ToTemProjet/TennisBallCollector.git
+```
+
 Se placer dans le dossier "TennisBallCollector"
 ```bash
-cd <you_directory>/TennisBallCollector/
+cd <your_directory>/TennisBallCollector/
 ```
 
 Construire l'ensemble du projet :
@@ -25,14 +30,13 @@ colcon build --symlink-install
 ```
 
 Charger les variables nécessaires au fonctionnement de ROS2 :
-
 ```bash
 source setup.sh
 ```
 
 Lancer le robot ET la scène :
 ```bash
-ros2 launch totem robot.launch.py
+ros2 launch bot robot.launch.py
 ```
 
 

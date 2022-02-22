@@ -5,10 +5,11 @@ from Zones import *
 
 
 class Map:
-    def __init__(self,new_light,name="Map",scale_percent=80):
+    def __init__(self,camera,name="Map",scale_percent=80):
         self.message=""
         self.__name=name
-        self.reload(new_light,scale_percent)
+        self.reload(camera,scale_percent)
+        self.img_evolve=self._img
 
     def __str__(self, saved=False):
         cv2.imshow('image', self._img)
@@ -37,8 +38,18 @@ class Map:
             print(self.log())
 
 
-    def hell_and_heaven(self,heaven_boxes=[np.array([[48,49],[165,147]]),np.array([[1306,675],[1423,774]])]):
-        for box in heaven_boxes:
+    def hell_and_heaven(self,heaven_boxes=[np.array([[48,49],[165,147]]),np.array([[1306,675],[1423,774]])],
+                        hell_boxes=[np.array([[0,0],[48,733]]),
+                                    np.array([[0,733],[1423,824]]),
+                                    np.array([[1424,48],[1475,824]]),
+                                    np.array([[48,0],[1475,48]]),
+                                    np.array([[731,120],[740,706]]),
+                                    np.array([[165,50],[169,83]]),
+                                    np.array([[47,148],[83,151]]),
+                                    np.array([[1388,671],[1475,824]]),
+                                    np.array([[1301,737],[1308,774]])]):
+        self.goals=[Goal(heaven_boxes[i], name="Goal{}".format(i+1)) for i in range(len(heaven_boxes))]
+        self.walls=[Wall(hell_boxes[i], name="Wall{}".format(i+1)) for i in range(len(heaven_boxes)))]
 
             # i=box[0,0]
             # while i<=box[1,0]:

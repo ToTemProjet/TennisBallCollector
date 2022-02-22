@@ -42,7 +42,7 @@ def generate_launch_description():
 
     # gazebo_spawn_entity_node = Node(
     #     package="gazebo_ros", executable="spawn_entity.py",
-    #     arguments=["-entity", "totem", "-topic", "/robot_description",
+    #     arguments=["-entity", "bot", "-topic", "/robot_description",
     #                 "-x", "0", "-y", "0", "-z", "0.95"],
     #     )
 
