@@ -93,9 +93,11 @@ class Goal(Zone):
         print(self.log())
 
 class Ball(Zone):
-    def __init__(self,box_pix,name="Ball1connu"):
+    def __init__(self,center,name="Ball1connu"):
+        self._center = center
+        box_pix=np.array([[center[0]-1,center[1]-1],[center[0]+1,center[1]+1]])
         super().__init__(box_pix=box_pix,type="ball",name=name)
-        self._center=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
+
 
     def display(self,map,saved=False):
         try:
@@ -115,7 +117,7 @@ class Ball(Zone):
 class Robot(Zone):
     def __init__(self,box_pix,name="Robot1connu"):
         super().__init__(box_pix=box_pix, type="robot",name=name)
-        self._center=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
+        self.center=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
 
     def display(self,map,saved=False):
         try:
@@ -132,7 +134,8 @@ class Robot(Zone):
             self.message += "Aucun robot ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
 
-    def best_way(self,list_balls):
+    def best_way(self,list_balls):#separer les balles en fonction partie A ou B
+
         pass
 
 if __name__=="__main__":
