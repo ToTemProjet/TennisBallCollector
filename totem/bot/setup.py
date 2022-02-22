@@ -13,7 +13,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
-        (os.path.join('share', package_name, 'urdf'), glob('urdf/*.urdf*')),  
+        (os.path.join('share', package_name, 'urdf'), glob('urdf/*.urdf*')),
     ],
     install_requires=['setuptools', "rclpy"],
     zip_safe=True,

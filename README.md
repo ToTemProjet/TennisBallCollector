@@ -2,17 +2,12 @@
 
 Ceci est un template de dépôt Git pour le cours d'ingénierie système et modélisation robotique à l'ENSTA Bretagne en 2021.
 
-## Lancer la simulation
-
 ### Dépendences
 
 ###### A compléter avec la/les dépendences.
 
 
-
 ### Démarrer la simulation
-
-###### A compléter avec la/les commande(s) à lancer.
 
 Cloner le repository :
 ```bash
@@ -39,6 +34,9 @@ Lancer le robot ET la scène :
 ros2 launch bot robot.launch.py
 ```
 
+### Modifier les package
+
+Une erreur connue et non traitée existe concernant le symlink des fichiers en utilisant un setup.py avec le ament_python dans le package.xml. (Source : https://github.com/colcon/colcon-core/issues/407) Il est donc nécessaire de build à nouveau les packages après modification d'un fichier partagé. (Ex.: .launch; .urdf...)
 
 ## Groupe
 
@@ -54,7 +52,6 @@ Martin GOUNABOU
 ### Gestion de projet
 
 https://tree.taiga.io/project/andrei54-totem/timeline
-
 
 
 ## Structure du dépôt

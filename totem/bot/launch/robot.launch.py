@@ -15,6 +15,7 @@ def generate_launch_description():
     gazebo_ros_share = get_package_share_directory("gazebo_ros")
     cam_zen_share = get_package_share_directory("camera_zenitale")
     desc_package = get_package_share_directory("bot")
+
     model_file = os.path.join(desc_package, "urdf", "bot.urdf.xacro")
 
     # A ne pas utiliser ici
