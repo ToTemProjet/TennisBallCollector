@@ -7,10 +7,11 @@ import matplotlib.pyplot as plt
 class Zone:
     def __init__(self, box_pix, type, name="1connu", partie="None"):
         avalaible_types=["ball","robot","wall","goal"]
-        self.message=""
+        self.message=name+'\n'
         self.__name=name
         self._blocked=False
         self._partie=partie
+        self.assigne_partie()
         try:
             self.__type=type
             assert type in avalaible_types
@@ -43,8 +44,11 @@ class Zone:
 
         print(self.log())
 
-    def __str__(self,map=None):
-        pass
+    def __str__(self):
+        print(self.__name)
+        print(self.__type)
+        print(self._partie)
+        print(self.log())
 
 
     def log(self):
@@ -57,21 +61,76 @@ class Wall(Zone):
         super().__init__(box_pix=box_pix,type="wall",name=name)
         self.switch_access(True)
 
-    def __str__(self,map):
+
+    def display(self,map,saved=False):
         try:
-            img=
+            for i in range(self._box_pix[0,0],self._box_pix[1,0]):
+                for j in range(self._box_pix[0, 1], self._box_pix[1, 1]):
+                    map.img[j,i]=[0]*3
+            map.__str__(saved)
+            self.message += "Des murs ont été ajouté" + "\n"
+            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+        except:
+            self.message += "Mur non ajouté! L'objet map est peut être inadaptée!" + "\n"
+        print(self.log())
+
+
 
 class Goal(Zone):
     def __init__(self,box_pix,name="Goal1connu"):
         super().__init__(box_pix=box_pix,type="goal",name=name)
 
+    def display(self,map,saved=False):
+        try:
+            for i in range(self._box_pix[0,0],self._box_pix[1,0]):
+                for j in range(self._box_pix[0, 1], self._box_pix[1, 1]):
+                    map.img[j,i]=[255]*3
+            map.__str__(saved)
+            self.message += "Un nouvel objectif a été ajouté" + "\n"
+            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+        except:
+            self.message += "Aucun nouvel objectif ajouté! L'objet map est peut être inadaptée!" + "\n"
+        print(self.log())
+
 class Ball(Zone):
     def __init__(self,box_pix,name="Ball1connu"):
         super().__init__(box_pix=box_pix,type="ball",name=name)
+        self._center=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
+
+    def display(self,map,saved=False):
+        try:
+            for i in [self._box_pix[0,0],self._box_pix[1,0]]:
+                for j in range(self._box_pix[0, 1], self._box_pix[1, 1]):
+                    map.img[[j,i]]=[0,255,255]
+            for j in [self._box_pix[0, 1], self._box_pix[1, 1]]:
+                for i in range(self._box_pix[0,0],self._box_pix[1,0]):
+                    map.img[[j,i]] = [0, 255, 255]
+            map.__str__(saved)
+            self.message += "Une balle a été ajouté" + "\n"
+            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+        except:
+            self.message += "Aucune nouvelle balle ajouté! L'objet map est peut être inadaptée!" + "\n"
+        print(self.log())
 
 class Robot(Zone):
-    def __init__(self,name="Robot1connu"):
-        super().__init__(type="robot",name=name)
+    def __init__(self,box_pix,name="Robot1connu"):
+        super().__init__(box_pix=box_pix, type="robot",name=name)
+        self._center=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
+
+    def display(self,map,saved=False):
+        try:
+            for i in [self._box_pix[0,0],self._box_pix[1,0]]:
+                for j in range(self._box_pix[0, 1], self._box_pix[1, 1]):
+                    map.img[[j,i]]=[255, 255, 0]
+            for j in [self._box_pix[0, 1], self._box_pix[1, 1]]:
+                for i in range(self._box_pix[0,0],self._box_pix[1,0]):
+                    map.img[[j,i]] = [255, 255, 0]
+            map.__str__(saved)
+            self.message += "Le robot a été ajouté" + "\n"
+            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+        except:
+            self.message += "Aucun robot ajouté! L'objet map est peut être inadaptée!" + "\n"
+        print(self.log())
 
     def best_way(self,list_balls):
         pass
