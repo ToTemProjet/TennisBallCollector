@@ -24,6 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+        "my_node=bot.robot_control:main"
         ],
     },
 )

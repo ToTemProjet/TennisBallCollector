@@ -47,9 +47,9 @@ def generate_launch_description():
                     "-x", "0", "-y", "0", "-z", "0.95"],
         )
 
-    # rqt_robot_steering_node = Node(
-    #     package="rqt_robot_steering", executable="rqt_robot_steering"
-    #     )
+    rqt_robot_steering_node = Node(
+         package="rqt_robot_steering", executable="rqt_robot_steering"
+         )
 
     joint_state_publisher_node = Node(
         package="joint_state_publisher",
@@ -63,6 +63,6 @@ def generate_launch_description():
         zen_cam,
         robot_state_publisher_node,
         gazebo_spawn_entity_node,
-        # rqt_robot_steering_node,
+        rqt_robot_steering_node,
         joint_state_publisher_node
     ])
