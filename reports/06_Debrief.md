@@ -1,37 +1,35 @@
 # Debrief du 23/02/2022
 
-PO: Badr MOUTALIB
+PO: Florian GAURIER
 
 
 ## Bilan
 
-Pourcentage de tâches réalisées: 70 %
+Pourcentage de tâches réalisées: 66% (Fermeture tâches sprints précédents non comptabilisées)
 
 ### Ce qui a fonctionné
 
-- Récupérer les positions des balles
-- detecter le robot avec la caméra zenithale
-- Réduire la taille du robot
-
+- On a travaillé efficacement
+- Revu l'architecture physique du robot et est fonctionnelle
+- Communication de la caméra vers le mapping et la commande opérationnel
+- Mapping prêt à tester
+- Remise à jour du Taiga
+- Répartition des tâches
 
 ### Ce qui n'a pas fonctionné
 
-- le robot ne tourne pas bien
-- Difficulté de commander le robot avec 4 roues
-- Trouver le topic pour controler les portes coulissantes
+- Beaucoup de débuggage
+- Architecture à revoir au dernier moment (mauvaise conception initiale)
+- Sprint très ambitieux (Pour avoir un robot qui fonctionne)
 
 ### Retour d'expérience du PO
 
-Necessiter de bien planifier pour ne pas tomber dans des problèmes à l'architecture générale du robot.
-
+Une certaine lourdeur de toujours se tenir au courant des tâches de tout le monde et de les mettre à jour.
 
 ### Conseils pour le prochain PO
 
-- Bien décider des mesures à prendre en cas de problème
-- Être plus clair sur la definition des taches.
-
+Ne pas se mettre sur des tâches complexes, faire des choses simple.
 
 ## Nouvelles mesures
 
-Voir le README.md
-- Changer l'architecture du robot
+N.A.
