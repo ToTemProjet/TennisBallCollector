@@ -146,25 +146,25 @@ class Robot(Zone):
             self.message += "Aucun robot ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
 
-    def nearest(self,list_balls,list_balls_other):#separer les balles en fonction partie A ou B
-        if len(list_balls) > 0 :
-            length=np.inf
-            for lb in list_balls:
-                lgh = hypot(lb.center[0] - pos[0], lb.center[1] - pos[1])
-                if lgh<length:
-                    length=lgh
-                    self.next_point=lb
-        else:
-            if len(list_balls_other) > 0: self.passage()
-            else: self.final_destination()
+    # def nearest(self,list_balls,list_balls_other):#separer les balles en fonction partie A ou B
+    #     if len(list_balls) > 0 :
+    #         length=np.inf
+    #         for lb in list_balls:
+    #             lgh = hypot(lb.center[0] - pos[0], lb.center[1] - pos[1])
+    #             if lgh<length:
+    #                 length=lgh
+    #                 self.next_point=lb
+    #     else:
+    #         if len(list_balls_other) > 0: self.passage()
+    #         else: self.final_destination()
 
     def passage(self,map):
-        self.next_point=Ball(np.array([crossing_point(map,self)]))
+        self.next_point=crossing_point(map,self)
 
     def final_destination(self,map):
         for g in map.goal:
             if g._partie==self._partie:
-                self.next_point=g.center
+                self.next_point=g.center.flatten()
                 pass
 
 

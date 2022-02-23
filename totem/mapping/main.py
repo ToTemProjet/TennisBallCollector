@@ -57,26 +57,28 @@ class Mapping(Node):
         Rob.display(self.map)
         if Rob.partie()=="A"
             if len(self.LbA)==0:
-                if len(self.LbB) > 0:
-                    Rob.final_destination()
-                    ### publish le point
-                    ###publish(videtout)
-                    Rob.passage()
-                    ### publish le point
+                if len(self.LbB) > 0: Rob.passage()
                 else: Rob.final_destination()
-                self.next_point_publisher.publish(Float32MultiArray(Rob.next_point))
-            else: publish(self.LbA)
+                cX_pdp,cY_pdp=Rob.next_point[0],Rob.next_point[1]
+                msg = Float32MultiArray()
+                msg.data = [float(cX_pdp), float(cY_pdp)]
+                self.next_point_publisher.publish(msg)
+            else:
+                msg = Float32MultiArray()
+                msg.data = [val for val in self.LbA]
+                self.next_point_publisher.publish(msg)
         else:
             if len(self.LbB)==0:
-                if len(self.LbA) > 0:
-                    Rob.final_destination()
-                    ### publish le point
-                    ###publish(videtout)
-                    Rob.passage()
-                    ### publish le point
+                if len(self.LbA) > 0: Rob.passage()
                 else: Rob.final_destination()
-                self.next_point_publisher.publish(Float32MultiArray(Rob.next_point))
-            else: publish(self.LbB)
+                cX_pdp, cY_pdp = Rob.next_point[0], Rob.next_point[1]
+                msg = Float32MultiArray()
+                msg.data = [float(cX_pdp), float(cY_pdp)]
+                self.next_point_publisher.publish(msg)
+            else:
+                msg = Float32MultiArray()
+                msg.data = [val for val in self.LbB]
+                self.next_point_publisher.publish(msg)
 
 
 
