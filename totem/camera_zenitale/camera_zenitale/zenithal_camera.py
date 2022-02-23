@@ -87,6 +87,7 @@ class zenithalCameraNode(Node):
 					os.mkdir(self.cam_zen_share + "/img")
 				except:
 					pass
+				cv2.imwrite(self.cam_zen_share + "/img/source_img.jpg", self.img)
 				cv2.imwrite(self.cam_zen_share + "/img/hsv.jpg", hsv)
 				cv2.imwrite(self.cam_zen_share + "/img/thresholded_balls.jpg", thresholded_balls)
 				cv2.imwrite(self.cam_zen_share + "/img/thresholded_bot.jpg", thresholded_bot)
