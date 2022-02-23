@@ -65,61 +65,58 @@
 		</gazebo>
 	</xacro:macro>
 
-	<xacro:macro name="create_body" params="name mass">
-		<link name="${name}">
-			<visual>
-				<origin xyz="${(body_L/2)-e} 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${e} ${body_l} ${body_h}"/>
-				</geometry>
-				<material name="c">
-					<color rgba="0 0.9 0.9 1.0"/>
-				</material>
-			</visual>	
-			<visual>
-				<origin xyz="${-(body_L/2)+e} 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${e} ${body_l} ${body_h}"/>
-				</geometry>
-				<material name="c">
-					<color rgba="0 0.9 0.9 1.0"/>
-				</material>
-			</visual>		
-			<visual>
-				<origin xyz="0 ${(body_l/2)-e} 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${body_L} ${e} ${body_h}"/>
-				</geometry>
-				<material name="c">
-					<color rgba="0 0.9 0.9 1.0"/>
-				</material>
-			</visual>
-			<collision>
-				<origin xyz="${(body_L/2)-e} 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${e} ${body_l} ${body_h}"/>
-				</geometry>
-			</collision>
-			<collision>
-				<origin xyz="${-(body_L/2)+e} 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${e} ${body_l} ${body_h}"/>
-				</geometry>
-			</collision>
-			<collision>
-				<origin xyz="0 ${(body_L/2)-e} 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${body_L} ${e} ${body_h}"/>
-				</geometry>
-			</collision>
+	<link name="base_link">
+		<visual>
+			<origin xyz="${(body_L/2)-e} 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${e} ${body_l} ${body_h}"/>
+			</geometry>
+			<material name="c">
+				<color rgba="0 0.9 0.9 1.0"/>
+			</material>
+		</visual>	
+		<visual>
+			<origin xyz="${-(body_L/2)+e} 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${e} ${body_l} ${body_h}"/>
+			</geometry>
+			<material name="c">
+				<color rgba="0 0.9 0.9 1.0"/>
+			</material>
+		</visual>		
+		<visual>
+			<origin xyz="0 ${(body_l/2)-e} 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${body_L} ${e} ${body_h}"/>
+			</geometry>
+			<material name="c">
+				<color rgba="0 0.9 0.9 1.0"/>
+			</material>
+		</visual>
+		<collision>
+			<origin xyz="${(body_L/2)-e} 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${e} ${body_l} ${body_h}"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="${-(body_L/2)+e} 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${e} ${body_l} ${body_h}"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0 ${(body_L/2)-e} 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${body_L} ${e} ${body_h}"/>
+			</geometry>
+		</collision>
 
-			<xacro:box_inertia m="${mass}" w="3." d="2." h="1"/>
-		</link>
-	</xacro:macro>	 
+		<xacro:box_inertia m="${mass}" w="3." d="2." h="1"/>
+	</link> 
 
-	<xacro:create_body name="base_link" mass="${body_mass}"/>
+	<link name="base_link">
 
-	<!-- <link name="base_link">
 		<visual>
 			<origin xyz="${(body_L/2)-e} 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -209,6 +206,8 @@
 		<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
 	</link>
 
+
+
 	<link name="mid_panel">
 			<visual>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
@@ -226,21 +225,18 @@
 				</geometry>
 			</collision>
 			<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
-
 	</link>
-
 	<link name="mid_panel_prism">
-			<visual>
-				<origin xyz="-0.975 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="0.05 0.1 0.1"/>
-				</geometry>
-				<material name="m">
-					<color rgba="1 1 0 1.0"/>
-				</material>
-			</visual>
-			<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
-
+		<visual>
+			<origin xyz="-0.975 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.05 0.1 0.1"/>
+			</geometry>
+			<material name="m">
+				<color rgba="1 1 0 1.0"/>
+			</material>
+		</visual>
+		<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
 	</link> -->
 
 	<gazebo reference="base_link">
