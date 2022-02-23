@@ -36,7 +36,7 @@ ros2 launch bot robot.launch.py
 
 ### Modifier les package
 
-Une erreur connue et non traitée existe concernant le symlink des fichiers en utilisant un setup.py avec le ament_python dans le package.xml. (Source : https://github.com/colcon/colcon-core/issues/407) Il est donc nécessaire de build à nouveau les packages après modification d'un fichier partagé. (Ex.: .launch; .urdf...)
+Une erreur connue et non traitée existe concernant le symlink des fichiers en utilisant un setup.py avec le ament_python dans le package.xml. (Source : https://github.com/colcon/colcon-core/issues/407) Il est donc nécessaire de build à nouveau les packages après modification d'un fichier partagé via le setup.py. (Ex.: .launch; .urdf...)
 
 ## Groupe
 
