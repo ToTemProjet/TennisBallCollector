@@ -24,7 +24,7 @@ class zenithalCameraNode(Node):
 
 		self.create_timer(0.1, self.search_balls_and_robot)
 
-		self.thresh = [30, 50]
+		self.thresh = [30, 40]
 
 	def img_callback(self, msg):
 		self.img = np.array(msg.data, dtype=np.uint8).reshape((msg.height, msg.width, 3))
@@ -43,7 +43,10 @@ class zenithalCameraNode(Node):
 			# self.fig = plot3dchans(hsv, "hsv", self.fig)
 			thresholded = cv2.inRange(hsv[:,:,0], (self.thresh[0]), (self.thresh[1]))
 
-			output = cv2.connectedComponentsWithStats(thresholded)
+			kernel = np.ones((9,9),np.uint8)
+			closing = cv2.morphologyEx(thresholded, cv2.MORPH_OPEN, kernel)
+
+			output = cv2.connectedComponentsWithStats(closing)
 			(numLabels, labels, stats, centroids) = output
 
 
@@ -52,7 +55,8 @@ class zenithalCameraNode(Node):
 				for centroid in centroids[1:]:
 					cv2.circle(thresholded, (int(centroid[0]), int(centroid[1])), 2, (0, 0, 255), -1)
 
-				cv2.imshow("t", thresholded)
+				cv2.imshow("closing", closing)
+				cv2.imshow("thresholded", thresholded)
 				cv2.waitKey(1)
 
 
@@ -60,15 +64,7 @@ class zenithalCameraNode(Node):
 			msg = Float32MultiArray()
 			msg.layout.dim = [MultiArrayDimension(), MultiArrayDimension()]
 			
-			msg.data = centroids[1:].reshape((centroids[1:].shape[1]*2))
-
-			msg.layout.dim[0].label = "channels"
-			msg.layout.dim[0].size = 2
-			msg.layout.dim[0].stride = 2*centroids[1:].shape[1]
-
-			msg.layout.dim[1].label = "samples"
-			msg.layout.dim[1].size = centroids[1:].shape[1]
-			msg.layout.dim[1].stride = centroids[1:].shape[1]
+			msg.data = [val for val in centroids[1:].flatten()]
 
 			self.ball_publisher.publish(msg)
 

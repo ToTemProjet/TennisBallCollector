@@ -228,24 +228,24 @@
 	</gazebo>
 
 	<gazebo reference="front_right_wheel">
-		<material>Gazebo/Green</material>
+		<material>Gazebo/Blue</material>
 	</gazebo>
 
 	<gazebo reference="front_left_wheel">
-		<material>Gazebo/Green</material>
+		<material>Gazebo/Blue</material>
 	</gazebo>
 
 
 	<gazebo reference="back_right_wheel">
-		<material>Gazebo/Green</material>
+		<material>Gazebo/Blue</material>
 	</gazebo>
 
 	<gazebo reference="back_left_wheel">
-		<material>Gazebo/Green</material>
+		<material>Gazebo/Blue</material>
 	</gazebo>
 
 	<gazebo reference="mid_panel">
-		<material>Gazebo/Green</material>
+		<material>Gazebo/Blue</material>
 	</gazebo>
 
 	<gazebo reference="front_panel">
