@@ -55,26 +55,22 @@ class zenithalCameraNode(Node):
 				cv2.imshow("t", thresholded)
 				cv2.waitKey(1)
 
-			arg = Float32MultiArray()
-			thing = MultiArrayDimension()
-			thing.label = "x"
-			thing.size = 1
-			thing.stride = 1
-			arg.layout.dim.append(thing)
 
-			thing = MultiArrayDimension()
-			thing.label = "y"
-			thing.size = 1
-			thing.stride = 1
-			arg.layout.dim.append(thing)
 
-			# arg.layout.data_offset = 1
-			arg.data = []
-			for centroid in centroids[1:]:
-				arg.data.append(centroid[0])
-				arg.data.append(centroid[1])
+			msg = Float32MultiArray()
+			msg.layout.dim = [MultiArrayDimension(), MultiArrayDimension()]
+			
+			msg.data = centroids[1:].reshape((centroids[1:].shape[1]*2))
 
-			self.ball_publisher.publish(arg)
+			msg.layout.dim[0].label = "channels"
+			msg.layout.dim[0].size = 2
+			msg.layout.dim[0].stride = 2*centroids[1:].shape[1]
+
+			msg.layout.dim[1].label = "samples"
+			msg.layout.dim[1].size = centroids[1:].shape[1]
+			msg.layout.dim[1].stride = centroids[1:].shape[1]
+
+			self.ball_publisher.publish(msg)
 
 	def shutdown(self, sig, frame):
 		sys.exit(0)
