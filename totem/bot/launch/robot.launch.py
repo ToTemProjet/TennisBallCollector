@@ -33,6 +33,7 @@ def generate_launch_description():
     # Zenital camera
     zen_cam = Node(
         package="camera_zenitale",
+        namespace='camera',
         output="screen",
         executable="zenithal_camera"
     )
