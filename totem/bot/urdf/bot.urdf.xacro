@@ -1,11 +1,41 @@
 <?xml version="1.0"?>
-<robot name="bot">
- 	<link name="base_link">
-	    <inertial>
-			<!-- <origin xyz="0 0 0.5" rpy="0 0 0"/> -->
-			<mass value="1"/>
-			<inertia ixx="2.3" ixy="0" ixz="0" iyy="3.35" iyz="0.00" izz="1.22" />
+<robot name="bot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- Define intertial property macros  -->
+	<xacro:macro name="box_inertia" params="m w h d">
+		<inertial>
+		<origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+		<mass value="${m}"/>
+		<inertia ixx="${(m/12) * (h*h + d*d)}" ixy="0.0" ixz="0.0" iyy="${(m/12) * (w*w + d*d)}" iyz="0.0" izz="${(m/12) * (w*w + h*h)}"/>
 		</inertial>
+	</xacro:macro>
+
+	<xacro:macro name="cylinder_inertia" params="m r h">
+		<inertial>
+		<origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+		<mass value="${m}"/>
+		<inertia ixx="${(m/12) * (3*r*r + h*h)}" ixy = "0" ixz = "0" iyy="${(m/12) * (3*r*r + h*h)}" iyz = "0" izz="${(m/2) * (r*r)}"/>
+		</inertial>
+	</xacro:macro>
+
+	<xacro:macro name="sphere_inertia" params="m r">
+		<inertial>
+		<mass value="${m}"/>
+		<inertia ixx="${(2/5) * m * (r*r)}" ixy="0.0" ixz="0.0" iyy="${(2/5) * m * (r*r)}" iyz="0.0" izz="${(2/5) * m * (r*r)}"/>
+		</inertial>
+	</xacro:macro>
+
+	<link name="base_footprint"/>
+
+	<!-- The base footprint of the robot is located underneath the chassis -->
+	<joint name="base_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="base_footprint" />
+		<origin xyz="0.0 0.0 -0.1" rpy="0 0 0"/>
+	</joint>
+
+ 	<link name="base_link">
+
 		<visual>
 		    <origin xyz="1.05 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -51,13 +81,13 @@
 				<box size="0.1 4 1"/>
 			</geometry>
 		</collision>
+
+		<xacro:box_inertia m="35.0" w="3." d="2." h="1"/>
   	</link>
 
+
 	<link name="back_left_wheel">
-		<inertial>
-			<mass value="100"/>
-			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
-		</inertial>
+
   		<visual>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -73,13 +103,11 @@
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
 		</collision>
+		<xacro:cylinder_inertia m="55.5" r="0.5" h="0.2"/>
   	</link>
 
 	<link name="back_right_wheel">
-		<inertial>
-			<mass value="100"/>
-			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
-		</inertial>
+
   		<visual>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -95,13 +123,12 @@
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
 		</collision>
+		<xacro:cylinder_inertia m="55.5" r="0.5" h="0.2"/>
+
   	</link>
 
 	<link name="front_left_wheel">
-		<inertial>
-			<mass value="100"/>
-			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
-		</inertial>
+
   		<visual>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -117,13 +144,12 @@
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
 		</collision>
+		<xacro:cylinder_inertia m="55.5" r="0.5" h="0.2"/>
+
   	</link>
 
 	<link name="front_right_wheel">
-		<inertial>
-			<mass value="100"/>
-			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
-		</inertial>
+	
   		<visual>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -139,14 +165,12 @@
 				<cylinder radius="0.5" length="0.2"/>
 			</geometry>
 		</collision>
+		<xacro:cylinder_inertia m="55.5" r="0.5" h="0.2"/>
+
   	</link>
 
 	<link name="front_panel">
-		<inertial>
-			<origin xyz="0 1.95 0" rpy="0 0 0"/>
-			<mass value="100"/>
-			<inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0" izz="0.2"/>
-		</inertial>
+
   		<visual>
 		    <origin xyz="0 1.95 0" rpy="0 0 0"/>
 			<geometry>
@@ -162,6 +186,7 @@
 				<box size="2 0.1 1"/>
 			</geometry>
 		</collision>
+		<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
   	</link>
 
 	<link name="mid_panel">
@@ -180,6 +205,8 @@
 				<box size="1.9 0.02 1"/>
 			</geometry>
 		</collision>
+		<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
+
   	</link>
 
 	<link name="mid_panel_prism">
@@ -192,9 +219,39 @@
 	       		<color rgba="1 1 0 1.0"/>
 	     	</material>
 		</visual>
+		<xacro:box_inertia m="10.0" w="4" d="5" h="6"/>
+
   	</link>
 
+	<gazebo reference="base_link">
+		<material>Gazebo/Red</material>
+	</gazebo>
 
+	<gazebo reference="front_right_wheel">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+	<gazebo reference="front_left_wheel">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+
+	<gazebo reference="back_right_wheel">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+	<gazebo reference="back_left_wheel">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+	<gazebo reference="mid_panel">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+	<gazebo reference="front_panel">
+		<material>Gazebo/Red</material>
+	</gazebo>
+	
 
 
 	<joint name="front_right_joint" type="continuous">

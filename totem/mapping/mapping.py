@@ -27,9 +27,9 @@ class Map:
             self.img = cv2.imread(self.__path, cv2.IMREAD_COLOR)
             assert str(type(self.img))=="<class 'numpy.ndarray'>"
             #print(self._img)
-            width = int(self.img.shape[1] * scale_percent / 100)
-            height = int(self.img.shape[0] * scale_percent / 100)
-            dim = (width, height)
+            self._width = int(self.img.shape[1] * scale_percent / 100)
+            self._height = int(self.img.shape[0] * scale_percent / 100)
+            dim = (self._width, self._height)
             self.img = cv2.resize(self.img, dim)
             self.message+= self.__path+" a bien été load!\n"
 
@@ -67,6 +67,11 @@ class Map:
             #         j+=1
             #     i+=1
 
+    def crossing_point(self,objet,top_point=[735,83],bottom_point=[735,740]):
+        if objet.center[1]>self._height/2:
+            return bottom_point
+        else:
+            return top_point
 
     def save(self, filename = 'savedMap.png'):
         # Using cv2.imwrite() method
