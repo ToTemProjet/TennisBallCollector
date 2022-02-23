@@ -24,7 +24,7 @@ Construire l'ensemble du projet :
 colcon build --symlink-install
 ```
 
-Charger les variables nécessaires au fonctionnement de ROS2 :
+Charger les variables nécessaires au fonctionnement de ROS2 : (Disponible sous galactic & foxy; recquiert l'installation sous /opt/ros/<distro>)
 ```bash
 source setup.sh
 ```
