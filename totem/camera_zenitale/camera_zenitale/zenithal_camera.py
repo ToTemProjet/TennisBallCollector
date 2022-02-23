@@ -109,6 +109,6 @@ class zenithalCameraNode(Node):
 
 def main():
 	rclpy.init()
-	zen_cam_node = zenithalCameraNode(True, True)
+	zen_cam_node = zenithalCameraNode(False, False)
 	signal.signal(signal.SIGINT, zen_cam_node.shutdown)
 	rclpy.spin(zen_cam_node)
