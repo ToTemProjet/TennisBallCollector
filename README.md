@@ -6,6 +6,8 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ###### A compléter avec la/les dépendences.
 
+Nécessite d'utiliser :
+- Opencv
 
 ### Démarrer la simulation
 
@@ -51,7 +53,8 @@ Martin GOUNABOU
 
 ### Gestion de projet
 
-https://tree.taiga.io/project/andrei54-totem/timeline
+Lien vers [Taiga](https://tree.taiga.io/project/andrei54-totem/timeline).
+Lien vers les slides de [présentation](https://docs.google.com/presentation/d/1YX5qmtOK7w0YDIIzOg7Bh3UYP3WFRpOGJme5MQlJPwY/edit?fbclid=IwAR04dgeRve3ENqcEQgt61lSeGD0bORqXG570YBEygAEDbzH90c43XUK55cY#slide=id.p).
 
 
 ## Structure du dépôt
