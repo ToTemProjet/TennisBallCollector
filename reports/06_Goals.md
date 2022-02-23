@@ -17,4 +17,6 @@ Faire et terminer la présentation
 ## Challenges techniques
 
 - Lever le portique : nécessite d'envoyer une commande au command_joint
+- Trouver la bonne inertie pour le robot
+- Ajouter une IMU pour l'orientation du robot
 - Temps très court

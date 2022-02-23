@@ -87,6 +87,7 @@ class zenithalCameraNode(Node):
 					os.mkdir(self.cam_zen_share + "/img")
 				except:
 					pass
+				cv2.imwrite(self.cam_zen_share + "/img/source_img.jpg", self.img)
 				cv2.imwrite(self.cam_zen_share + "/img/hsv.jpg", hsv)
 				cv2.imwrite(self.cam_zen_share + "/img/thresholded_balls.jpg", thresholded_balls)
 				cv2.imwrite(self.cam_zen_share + "/img/thresholded_bot.jpg", thresholded_bot)
@@ -108,6 +109,6 @@ class zenithalCameraNode(Node):
 
 def main():
 	rclpy.init()
-	zen_cam_node = zenithalCameraNode(False, False)
+	zen_cam_node = zenithalCameraNode(True, True)
 	signal.signal(signal.SIGINT, zen_cam_node.shutdown)
 	rclpy.spin(zen_cam_node)

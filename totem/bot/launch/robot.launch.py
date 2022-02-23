@@ -38,6 +38,12 @@ def generate_launch_description():
         executable="zenithal_camera"
     )
 
+    # bot_controler_node = Node(
+    #     package="bot",
+    #     output="screen",
+    #     executable="robot_control"
+    # )
+
     robot_state_publisher_node = Node(
         package="robot_state_publisher", executable="robot_state_publisher",
         parameters=[{"robot_description": Command(["xacro", " ", model_file])}]
@@ -65,6 +71,7 @@ def generate_launch_description():
         DeclareLaunchArgument(name="ROS_DISTRO", default_value="foxy"),
         tennis_court_launch,
         zen_cam,
+        # bot_controler_node,
         robot_state_publisher_node,
         gazebo_spawn_entity_node,
         rqt_robot_steering_node,
