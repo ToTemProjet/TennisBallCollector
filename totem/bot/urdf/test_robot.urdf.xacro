@@ -111,7 +111,6 @@
       <cylinder length="${lidar_l}" radius="${lidar_r}"/>
     </geometry>
   </visual>
-
   <xacro:cylinder_inertia m="${lidar_mass}" r="${lidar_r}" h="${lidar_l}" />
 </link>
 

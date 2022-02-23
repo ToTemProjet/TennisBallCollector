@@ -2,17 +2,19 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension
+from ament_index_python import get_package_share_directory
 import cv2
 import numpy as np
 import signal
 import sys
-
+import os
 
 class zenithalCameraNode(Node):
-	def __init__(self, display=False):
+	def __init__(self, display=False, saveImg=False):
 		super().__init__("zenithal_camera")
 		self.camera_history = 1
 		self.display = display
+		self.saveImg = saveImg
 		self.img = None
 
 		camera_qos_policy = rclpy.qos.QoSProfile(reliability=rclpy.qos.ReliabilityPolicy.BEST_EFFORT,
@@ -24,6 +26,8 @@ class zenithalCameraNode(Node):
 		self.robot_publisher = self.create_publisher(Float32MultiArray, "robot_position", 10)
 
 		self.create_timer(0.1, self.search_balls_and_robot)
+
+		self.cam_zen_share = get_package_share_directory("camera_zenitale")
 
 		self.balls_thresh = [30, 40]
 		self.bot_thresh = [(0, 120, 0),(10, 255, 255)]
@@ -38,6 +42,7 @@ class zenithalCameraNode(Node):
 	def search_balls_and_robot(self):
 		"""Returns array of [X, Y, T] for each ball detected,T is the time since ball has spawned"""
 		if self.img is not None:
+			cX_bot,cY_bot = 0, 0
 			hsv = cv2.cvtColor(self.img, cv2.COLOR_BGR2HSV)
 			
 			# Balls detection
@@ -51,30 +56,40 @@ class zenithalCameraNode(Node):
 
 			contours, hierarchy = cv2.findContours(thresholded_bot, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-			M = cv2.moments(contours[1])
-			cX_bot = int(M["m10"] / M["m00"])
-			cY_bot = int(M["m01"] / M["m00"])
+			if len(contours) >=1:
+				M = cv2.moments(contours[1])
+				cX_bot = int(M["m10"] / M["m00"])
+				cY_bot = int(M["m01"] / M["m00"])
 
-			# Affichage
-			if self.display == True:
-				thresholded_balls = cv2.cvtColor(thresholded_balls, cv2.COLOR_GRAY2BGR)
-				for centroid in centroids_balls[1:]:
-					cv2.circle(thresholded_balls, (int(centroid[0]), int(centroid[1])), 2, (0, 0, 255), -1)
+				# Affichage
+				if self.display == True:
+					thresholded_balls = cv2.cvtColor(thresholded_balls, cv2.COLOR_GRAY2BGR)
+					for centroid in centroids_balls[1:]:
+						cv2.circle(thresholded_balls, (int(centroid[0]), int(centroid[1])), 2, (0, 0, 255), -1)
 
-				thresholded_bot = cv2.cvtColor(thresholded_bot, cv2.COLOR_GRAY2BGR)
+					thresholded_bot = cv2.cvtColor(thresholded_bot, cv2.COLOR_GRAY2BGR)
 
-				cv2.drawContours(thresholded_bot, contours, 1, (0,255,0), 2)
-				colors = [(0, 0, 255), (0, 255, 0)]
-				for i in range(len(contours)):
-					M = cv2.moments(contours[i])
-					cX = int(M["m10"] / M["m00"])
-					cY = int(M["m01"] / M["m00"])
+					cv2.drawContours(thresholded_bot, contours, 1, (0,255,0), 2)
+					colors = [(0, 0, 255), (0, 255, 0)]
+					for i in range(len(contours)):
+						M = cv2.moments(contours[i])
+						cX = int(M["m10"] / M["m00"])
+						cY = int(M["m01"] / M["m00"])
 
-					cv2.circle(thresholded_bot, (cX, cY), 3, colors[i%2], -1)
-				cv2.imshow("thresholded_balls", thresholded_balls)
-				cv2.imshow("thresholded_bot", thresholded_bot)
-				# cv2.imshow("edges", im2)
-				cv2.waitKey(1)
+						cv2.circle(thresholded_bot, (cX, cY), 3, colors[i%2], -1)
+					cv2.imshow("thresholded_balls", thresholded_balls)
+					cv2.imshow("thresholded_bot", thresholded_bot)
+					# cv2.imshow("edges", im2)
+					cv2.waitKey(1)
+
+			if self.saveImg == True:
+				try:
+					os.mkdir(self.cam_zen_share + "/img")
+				except:
+					pass
+				cv2.imwrite(self.cam_zen_share + "/img/hsv.jpg", hsv)
+				cv2.imwrite(self.cam_zen_share + "/img/thresholded_balls.jpg", thresholded_balls)
+				cv2.imwrite(self.cam_zen_share + "/img/thresholded_bot.jpg", thresholded_bot)
 
 			# Msg balle
 			msg = Float32MultiArray()
@@ -93,6 +108,6 @@ class zenithalCameraNode(Node):
 
 def main():
 	rclpy.init()
-	zen_cam_node = zenithalCameraNode(False)
+	zen_cam_node = zenithalCameraNode(False, False)
 	signal.signal(signal.SIGINT, zen_cam_node.shutdown)
 	rclpy.spin(zen_cam_node)
