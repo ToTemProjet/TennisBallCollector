@@ -27,63 +27,68 @@
 
  	<link name="base_link">
 		<visual>
-		    <origin xyz="0.4 0 0" rpy="0 0 0"/>
+		    <origin xyz="0 0.4 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.1 1.5 0.5"/>
+				<box size="1.5 0.1 0.5"/>
 			</geometry>
 			<material name="c1">
 	       		<color rgba="0 0.5 0.9 1.0"/>
 	     	</material>
 		</visual>	
   		<visual>
-		    <origin xyz="-0.4 0 0" rpy="0 0 0"/>
+		    <origin xyz="0 -0.4 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.1 1.5 0.5"/>
+				<box size="1.5 0.1 0.5"/>
 			</geometry>
 			<material name="c">
 	       		<color rgba="0 0.5 0.9 1.0"/>
 	     	</material>
 		</visual>		
   		<visual>
-		    <origin xyz="0 -0.7 0" rpy="0 0 0"/>
+		    <origin xyz="0.7 0 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.7 0.1 0.5"/>
+				<box size="0.1 0.7 0.5"/>
 			</geometry>
 			<material name="c2">
 	       		<color rgba="0 0.9 0.9 1.0"/>
 	     	</material>
 		</visual>
   		<visual>
-          	<origin xyz="0 -0.2 0" rpy="0 0 0"/>
+          	<origin xyz="0.2 0 0" rpy="0 0 0"/>
 			<geometry>	
-				<box size="0.7 0.95 0.5"/>
+				<box size="0.95 0.7 0.5"/>
 			</geometry>
 			<material name="c">
 	       		<color rgba="0 0.1 0.9 1.0"/>
 	     	</material>
 		</visual>
 		<collision>
-		    <origin xyz="0 -0.7 0" rpy="0 0 0"/>
+		    <origin xyz="-0.7 0 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.7 0.1 0.5"/>
+				<box size="0.1 0.7 0.5"/>
 			</geometry>
 		</collision>
 		<collision>
-		    <origin xyz="0.4  0 0" rpy="0 0 0"/>
+		    <origin xyz="0 0.4 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.1 1.5 0.5"/>
+				<box size="1.5 0.1 0.5"/>
 			</geometry>
 		</collision>
 		<collision>
-		    <origin xyz="-0.4 0 0" rpy="0 0 0"/>
+		    <origin xyz="0 -0.4 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.1 1.5 0.5"/>
+				<box size="1.5 0.1 0.5"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0.2 0 0" rpy="0 0 0"/>
+			<geometry>	
+				<box size="0.95 0.7 0.5"/>
 			</geometry>
 		</collision>
 
 		<xacro:box_inertia m="5.0" w="3." d="2." h="0.5"/>
   	</link>
-
 
 	<link name="back_left_wheel">
   		<visual>
@@ -174,18 +179,18 @@
 
 	<link name="front_panel">
   		<visual>
-		    <origin xyz="0 0.7 0" rpy="0 0 0"/>
+		    <origin xyz="-0.7 0 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.7 0.1 0.5"/>
+				<box size="0.1 0.7 0.5"/>
 			</geometry>
 			<material name="f">
 	       		<color rgba="0 0 0.9 1.0"/>
 	     	</material>
 		</visual>
 		<collision>
-		    <origin xyz="0 0.7 0" rpy="0 0 0"/>
+		    <origin xyz="-0.7 0 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="0.7 0.1 0.5"/>
+				<box size="0.1 0.7 0.5"/>
 			</geometry>
 		</collision>
 		<xacro:box_inertia m="1.0" w="0.7" d="0.1" h="0.5"/>
@@ -200,14 +205,14 @@
 	</gazebo>
 	
 	<joint name="back_right_joint" type="continuous">
-		<origin xyz="-0.51 -0.5 -0.05" rpy="0 1.57 0"/>
+		<origin xyz="0.5 -0.51 -0.05" rpy="1.57 0 0"/>
         <parent link="base_link"/>
         <child link="back_right_wheel"/>
 		<axis xyz="0 0 1"/>
 		<limit effort="30" velocity="10.0"/>
  	</joint>
 	<joint name="back_left_joint" type="continuous">
-		<origin xyz="0.51 -0.5 -0.05" rpy="0 1.57 0"/>
+		<origin xyz="0.5 0.51 -0.05" rpy="1.57 0 0"/>
         <parent link="base_link"/>
         <child link="back_left_wheel"/>
 		<axis xyz="0 0 1"/>
@@ -224,9 +229,6 @@
 		<axis xyz="0 0 1"/>
 		<limit effort="10" velocity="1.0" lower="0" upper="0.25" />
  	</joint>
-
-
-
 
 <!-- *********************** CONTROLEUR ******************************  -->
 
@@ -252,7 +254,7 @@
 	<gazebo>
 		<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
 		<alwaysOn>true</alwaysOn>
-		<bodyName>base_footprint</bodyName>
+		<bodyName>base_link</bodyName>
 		<topicName>imu</topicName>
 		<serviceName>imu_service</serviceName>
 		<gaussianNoise>0.0</gaussianNoise>
