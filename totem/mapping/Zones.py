@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
-
+from math import hypot
 
 
 class Zone:
@@ -117,8 +116,8 @@ class Ball(Zone):
 class Robot(Zone):
     def __init__(self,box_pix,name="Robot1connu"):
         super().__init__(box_pix=box_pix, type="robot",name=name)
-        self.center=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
-
+        self.pos=[(box_pix[1,0]+box_pix[0,0])//2,(box_pix[1,1]+box_pix[0,1])//2]
+        self.next_point=self.pos
     def display(self,map,saved=False):
         try:
             for i in [self._box_pix[0,0],self._box_pix[1,0]]:
@@ -134,8 +133,27 @@ class Robot(Zone):
             self.message += "Aucun robot ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
 
-    def best_way(self,list_balls):#separer les balles en fonction partie A ou B
+    def nearest(self,list_balls):#separer les balles en fonction partie A ou B
+        if len(list_balls) > 0 :
+            length=np.inf
+            for lb in list_balls:
+                lgh = hypot(lb.center[0] - pos[0], lb.center[1] - pos[1])
+                if lgh<length:
+                    length=lgh
+                    self.next_point=lb
+        else: pass
 
+    def passage(self,map):
+        self.next_point=Ball(np.array([crossing_point(map,self)]))
+
+    def final_destination(self,map):
+        for g in map.goal:
+            if g._partie==self._partie:
+                self.next_point=g
+                pass
+
+
+    def go_to_point(self):
         pass
 
 if __name__=="__main__":
