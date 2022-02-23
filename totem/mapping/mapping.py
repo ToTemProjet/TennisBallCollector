@@ -35,7 +35,7 @@ class Map:
 
         except AssertionError:
             self.img=np.zeros((100,100,3))
-            self.message+=" Une image n'a pas été trouvée, image par défaut attribuée, essayez de reload! Est-ce que le chemin est bien: "+path + " ?"
+            self.message+=" Une image n'a pas été trouvée, image par défaut attribuée, essayez de reload! Est-ce que le chemin est bien: "+self.__path + " ?"
             print(self.log())
 
 
@@ -59,19 +59,22 @@ class Map:
 
         self.save("Map_with_walls_and_goals.png")
 
-            # i=box[0,0]
-            # while i<=box[1,0]:
-            #     j = box[0, 1]
-            #     while j<=box[1,1]:
-            #         self._img[j,i]=[250]*3
-            #         j+=1
-            #     i+=1
 
     def crossing_point(self,objet,top_point=[735,83],bottom_point=[735,740]):
         if objet.center[1]>self._height/2:
-            return bottom_point
+            if objet.center[0] >  self._width/2:
+                bottom_point[0]=bottom_point[0]-10
+                return bottom_point
+            else:
+                bottom_point[0]=bottom_point[0]+10
+                return bottom_point
         else:
-            return top_point
+            if objet.center[0] >  self._width/2:
+                top_point[0]=top_point[0]-10
+                return top_point
+            else:
+                top_point[0]=top_point[0]+10
+                return top_point
 
     def save(self, filename = 'savedMap.png'):
         # Using cv2.imwrite() method

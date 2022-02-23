@@ -43,6 +43,9 @@ class Zone:
 
         print(self.log())
 
+    def partie(self):
+        return self._partie
+
     def __str__(self):
         print(self.__name)
         print(self.__type)
@@ -66,9 +69,10 @@ class Wall(Zone):
             for i in range(self._box_pix[0,0],self._box_pix[1,0]):
                 for j in range(self._box_pix[0, 1], self._box_pix[1, 1]):
                     map.img[j,i]=[0]*3
-            map.__str__(saved)
             self.message += "Des murs ont été ajouté" + "\n"
-            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+            if saved:
+                map.save()
+                self.message += "Une nouvelle map a été sauvée" + "\n"
         except:
             self.message += "Mur non ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
@@ -84,9 +88,10 @@ class Goal(Zone):
             for i in range(self._box_pix[0,0],self._box_pix[1,0]):
                 for j in range(self._box_pix[0, 1], self._box_pix[1, 1]):
                     map.img[j,i]=[255]*3
-            map.__str__(saved)
             self.message += "Un nouvel objectif a été ajouté" + "\n"
-            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+            if saved:
+                map.save()
+                self.message += "Une nouvelle map a été sauvée" + "\n"
         except:
             self.message += "Aucun nouvel objectif ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
@@ -106,9 +111,10 @@ class Ball(Zone):
             for j in [self._box_pix[0, 1], self._box_pix[1, 1]]:
                 for i in range(self._box_pix[0,0],self._box_pix[1,0]):
                     map.img[[j,i]] = [0, 255, 255]
-            map.__str__(saved)
             self.message += "Une balle a été ajouté" + "\n"
-            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+            if saved:
+                map.save()
+                self.message += "Une nouvelle map a été sauvée" + "\n"
         except:
             self.message += "Aucune nouvelle balle ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
@@ -128,12 +134,14 @@ class Robot(Zone):
                     map.img[[j,i]] = [255, 255, 0]
             map.__str__(saved)
             self.message += "Le robot a été ajouté" + "\n"
-            if saved: self.message += "Une nouvelle map a été sauvée" + "\n"
+            if saved:
+                map.save()
+                self.message += "Une nouvelle map a été sauvée" + "\n"
         except:
             self.message += "Aucun robot ajouté! L'objet map est peut être inadaptée!" + "\n"
         print(self.log())
 
-    def nearest(self,list_balls):#separer les balles en fonction partie A ou B
+    def nearest(self,list_balls,list_balls_other):#separer les balles en fonction partie A ou B
         if len(list_balls) > 0 :
             length=np.inf
             for lb in list_balls:
@@ -141,7 +149,9 @@ class Robot(Zone):
                 if lgh<length:
                     length=lgh
                     self.next_point=lb
-        else: pass
+        else:
+            if len(list_balls_other) > 0: self.passage()
+            else: self.final_destination()
 
     def passage(self,map):
         self.next_point=Ball(np.array([crossing_point(map,self)]))
