@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from Zones import *
+from time import sleep
 
 
 class Map:
@@ -14,7 +15,8 @@ class Map:
 
     def __str__(self, saved=False):
         cv2.imshow('image', self.img)
-        cv2.waitKey(0)
+        cv2.waitKey(1)
+        sleep(1)
         cv2.destroyAllWindows()
         self.message += "Une image a été affichée \n"
 
@@ -93,3 +95,4 @@ if __name__=="__main__":
     nl="Tennis_camera_plafond.png"
     M=Map(nl)
     M.hell_and_heaven()
+    M.__str__()

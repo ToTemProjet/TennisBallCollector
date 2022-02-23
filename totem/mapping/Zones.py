@@ -82,6 +82,7 @@ class Wall(Zone):
 class Goal(Zone):
     def __init__(self,box_pix,name="Goal1connu"):
         super().__init__(box_pix=box_pix,type="goal",name=name)
+        self.center=np.array([[(box_pix[0,0]+box_pix[1,0])//2],[(box_pix[0,1]+box_pix[1,1])//2]])
 
     def display(self,map,saved=False):
         try:
@@ -102,6 +103,10 @@ class Ball(Zone):
         box_pix=np.array([[center[0]-1,center[1]-1],[center[0]+1,center[1]+1]])
         super().__init__(box_pix=box_pix,type="ball",name=name)
 
+    def Is_ball_on_other(self,Zone):
+        if self._center[0] in range(Zone._box_pix[0]) and self._center[1] in range(Zone._box_pix[1]):
+            return True
+        return False
 
     def display(self,map,saved=False):
         try:
@@ -159,7 +164,7 @@ class Robot(Zone):
     def final_destination(self,map):
         for g in map.goal:
             if g._partie==self._partie:
-                self.next_point=g
+                self.next_point=g.center
                 pass
 
 

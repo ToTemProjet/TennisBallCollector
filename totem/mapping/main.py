@@ -19,8 +19,7 @@ class Mapping(Node):
                                                  history=rclpy.qos.HistoryPolicy.KEEP_LAST,
                                                  depth=self.camera_history)
 
-        self.img_publisher = self.create_publisher(Image, "localisaton", 10)
-        self.parcours_publisher = self.create_publisher(Float32MultiArray, "next_point", 10)
+        self.next_point_publisher = self.create_publisher(Float32MultiArray, "next_point", 10)
         self.img_subscriber = self.create_subscription(Image, "/zenith_camera/image_raw", self.img_callback,
                                                        camera_qos_policy)
         self.ball_subscriber = self.create_subscription(Float32MultiArray, "balls_position", self.balls_callback,10)
@@ -40,20 +39,46 @@ class Mapping(Node):
             self.map.__str__(True)
 
     def balls_callback(self, msg):
-        LbA,LbB=[],[]
         i=1
+        self.LbA, self.LbB = [], []
         for b in msg.data.reshape():
             Tennisball=Ball(b[:2], "balle{}".format(i))
             Tennisball.assigne_partie()
+            Tennisball.display(self.map)
             i += 1
             if Tennisball.partie()=="A":
-                LbA.append(Tennisball)
-            else: LbB.append(Tennisball)
+                self.LbA.append(Tennisball)
+            else: self.LbB.append(Tennisball)
 
     def robot_callback(self, msg):
         bot_data=msg.data.reshape()
         Rob=Robot(bot_data[:2],"Robot")
         Rob.assigne_partie()
+        Rob.display(self.map)
+        if Rob.partie()=="A"
+            if len(self.LbA)==0:
+                if len(self.LbB) > 0:
+                    Rob.final_destination()
+                    ### publish le point
+                    ###publish(videtout)
+                    Rob.passage()
+                    ### publish le point
+                else: Rob.final_destination()
+                self.next_point_publisher.publish(Float32MultiArray(Rob.next_point))
+            else: publish(self.LbA)
+        else:
+            if len(self.LbB)==0:
+                if len(self.LbA) > 0:
+                    Rob.final_destination()
+                    ### publish le point
+                    ###publish(videtout)
+                    Rob.passage()
+                    ### publish le point
+                else: Rob.final_destination()
+                self.next_point_publisher.publish(Float32MultiArray(Rob.next_point))
+            else: publish(self.LbB)
+
+
 
 
         try:
